@@ -16,7 +16,7 @@ This sample assumes you are familiar with [AWS CodeBuild](https://aws.amazon.com
 
 Is also assumes you have a Load Impact account. [If not, go get one – it’s free](http://loadimpact.com).
 
-Set up your AWS CodeBuild build
+1. Set up your AWS CodeBuild build
 ===============================
 
 We created an AWS CodeBuild project which we named LI\_CB\_DEMO. It’s very simple, everything is just default.
@@ -64,16 +64,16 @@ The test command itself is added as a build comamnd. It just involves executing 
 
 You can get the code for the cb\_bash.sh script from github in the [loadimpact/codebuildloadimpact](https://github.com/loadimpact/codebuildloadimpact) repo where it is shared.
 
-Integrate with the Load Impact API
+2. Integrate with the Load Impact API
 ==================================
 
 Before we dive into the details – let’s get some essentials from your Load Impact account. We need the API key so you can access the API and a test to run.
 
-The API key you get in your Load Impact account when you are logged in
+You can find your API key when you are logged into your Load Impact account. 
 
 <img src="media/image4.png" width="624" height="322" />
 
-Go to “Monitoring” on the left and click “Use REST API”.
+Go to “Monitoring” on the left and click “Use REST API.”
 
 Then copy it from the yellow text box.
 
@@ -89,7 +89,7 @@ So now you have a test id for the test you want to run in your build and your AP
 
 All of the code is shared at Github for your download in the [loadimpact/codebuildloadimpact](https://github.com/loadimpact/codebuildloadimpact) repo!
 
-3a Edit the build settings to set the test Id and the API key
+3a. Edit the build settings to set the test Id and the API key
 =============================================================
 
 To avoid sticking sensitive information such as your test id and your API key into the script itself we use environment variables set in your build settings to hold these.
@@ -125,7 +125,7 @@ uri="https://api.loadimpact.com/v2/test-configs/$testId/start"
 
 So make sure you set the LI\_TEST\_ID and LI\_API\_KEY environment variables!
 
-3b Kick off a performance test
+3b. Kickoff a performance test
 ==============================
 
 ```bash
@@ -177,7 +177,7 @@ We get that status of the test by [calling the API](http://developers.loadimpact
 
 The last thing we do is to write a message to stdout that the test is running.
 
-3c The test is running
+3c. The test is running
 ======================
 
 ```bash
@@ -222,7 +222,7 @@ We get the value by calling the same API as before but for the VU Load Time resu
 
 If the value exceeds 1 second we exit the build step and fail it by setting the exit code to 4. This tells Codebuild it failed and we also write a message on stdout.
 
-3d Show the results
+3d. Show the results
 ===================
 
 ```bash
@@ -235,7 +235,7 @@ echo "Full results at https://app.loadimpact.com/test-runs/$tid"
 
 Finally, we show the results and output the max VU Load Time. It can of course be any result but as a sample. You can use this result to decide on further actions in your build as well but that is outside the scope of this sample. And of course we tack on a direct link to the full results and analysis in Load Impact.
 
-Finally, executing the build in Codebuild.
+4. Executing the build in Codebuild.
 ==========================================
 
 As you start a build in Codebuild it will look like this
